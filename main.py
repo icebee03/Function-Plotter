@@ -1,15 +1,14 @@
 import sys
+import time
+
 import matplotlib.pyplot as plt
 import numpy as np
+from tkinter import *
+import customtkinter as ctk
 
 
 def f(x):
     return 2 * x ** 2 + 3 * x + 5
-
-
-def run(p, x):
-    value = np.polyval(p, x)
-    return value
 
 
 def firstplot():
@@ -33,11 +32,25 @@ def plotFunction(x, y, name):
     plt.show()
 
 
+def initCTkValues(app):
+    ctk.set_appearance_mode("dark")
+    ctk.set_default_color_theme("green")
+    app.geometry("500x500")
+    #button = ctk.CTkButton(master=app, text="Hello World!")
+    #button.place(relx=0.5, rely=0.5, anchor=CENTER)
+
+
 def main():
-    args = sys.argv[1:]
-    arg = ""
-    for i in range(len(args)):
-        arg += args[i] + " "
+    app = ctk.CTk()
+    initCTkValues(app)
+
+    entry = ctk.CTkEntry(app, placeholder_text="Enter your values")
+    entry.place(relx=.5, rely=.5, anchor= CENTER)
+    time.sleep(1)
+    arg = entry.get()
+    args = arg.split()
+    print(args)
+
 
     polynomial = []
     for i in range(0, len(args), 2):
@@ -48,7 +61,10 @@ def main():
         x.append(i)
         y.append(np.polyval(polynomial, i))
 
-    plotFunction(x, y, arg)
+    #plotFunction(x, y, arg)
+    app.mainloop()
+
+
 
 
 if __name__ == "__main__":
